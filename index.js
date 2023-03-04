@@ -14,7 +14,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const path = require("path");
 const port = process.env.PORT || 3235;
-const MongoDBStore = require('connect-mongo')(session)
+// const MongoDBStore = require('connect-mongo')(session)
 
 // My Modules
 const User = require("./model/user");
@@ -30,15 +30,15 @@ const logRegRoute = require("./routes/logRegRoute");
 const userRoute = require("./routes/userRoute");
 const adminRoute = require("./routes/adminRoute");
 
-const store = new MongoDBStore({
-  url: process.env.MONGO_URI,
-  secret: 'thishouldbeabettersecret',
-  touchAfter: 24*60*60
-})
+// const store = new MongoDBStore({
+//   url: process.env.MONGO_URI,
+//   secret: 'thishouldbeabettersecret',
+//   touchAfter: 24*60*60
+// })
 
-store.on('error', function(e) {
-  console.log('Session Store Error', e)
-})
+// store.on('error', function(e) {
+//   console.log('Session Store Error', e)
+// })
 
 const sessionOptions = {
   store,
