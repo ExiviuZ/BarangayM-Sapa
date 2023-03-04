@@ -14,7 +14,34 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const path = require("path");
 const port = process.env.PORT || 3235;
+const MongoDBStore = require('connect-mongo')(session)
+
+// My Modules
+const User = require("./model/user");
+const Admin = require("./model/admin");
+const Survey = require("./model/survey");
+const { notLoggedIn, loggedIn } = require("./middleware");
+const multer = require("multer");
+const { storage } = require("./cloudinary/index");
+const upload = multer({ storage });
+
+// Router
+const logRegRoute = require("./routes/logRegRoute");
+const userRoute = require("./routes/userRoute");
+const adminRoute = require("./routes/adminRoute");
+
+const store = new MongoDBStore({
+  url: process.env.MONGO_URI,
+  secret: 'thishouldbeabettersecret',
+  touchAfter: 24*60*60
+})
+
+store.on('error', function(e) {
+  console.log('Session Store Error', e)
+})
+
 const sessionOptions = {
+  store,
   secret: "notasecret",
   resave: false,
   saveUninitialized: false,
@@ -24,20 +51,6 @@ const sessionOptions = {
   },
   httpOnly: true,
 };
-
-// My Modules
-const User = require("./model/user");
-const Admin = require("./model/admin");
-const Survey = require("./model/survey");
-const { notLoggedIn, loggedIn } = require("./middleware");
-const multer = require("multer");
-const { storage } = require("./cloudinary/index.js");
-const upload = multer({ storage });
-
-// Router
-const logRegRoute = require("./routes/logRegRoute");
-const userRoute = require("./routes/userRoute");
-const adminRoute = require("./routes/adminRoute");
 
 // Database Connection
 mongoose.set('strictQuery', false)
