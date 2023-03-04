@@ -41,7 +41,6 @@ const adminRoute = require("./routes/adminRoute");
 // })
 
 const sessionOptions = {
-  store,
   secret: "notasecret",
   resave: false,
   saveUninitialized: false,
