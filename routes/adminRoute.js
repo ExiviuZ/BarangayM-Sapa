@@ -10,17 +10,17 @@ const upload = multer({storage})
 const { ObjectId } = require('mongodb');
 
 //Create Admin
-// router.get('/new', async (req,res) => {
+ router.get('/new', async (req,res) => {
 
-//   const user = new Admin({
-//     name: "Administrator",
-//     username: 'admin'
-//   });
+   const user = new Admin({
+     name: "Administrator",
+     username: 'admin'
+   });
 
-//   const registeredUser = await Admin.register(user, 'admin');
-//   await user.save();
-//   res.send('new admin')
-// })
+   const registeredUser = await Admin.register(user, 'admin');
+   await user.save();
+   res.send('new admin')
+ })
 
 
 router.get('/covid', notLoggedIn, notAdmin, async (req, res) => {
